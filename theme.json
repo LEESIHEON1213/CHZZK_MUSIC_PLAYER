@@ -1,0 +1,14 @@
+{
+  "name": "니나마무",
+  "bg": "#fdf6ee",
+  "surface": "#ffffff",
+  "surface2": "#fff8f0",
+  "border": "#f0d9c0",
+  "accent": "#f07800",
+  "accent2": "#f5a830",
+  "text": "#2a1f14",
+  "muted": "#b09070",
+  "hover": "#fff0e0",
+  "header_bg": "#f07800",
+  "header_text": "#ffffff"
+}
