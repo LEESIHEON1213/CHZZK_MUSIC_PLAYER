@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d0f14"/>
+      <stop offset="100%" stop-color="#1a1200"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="38%" cy="50%" r="45%">
+      <stop offset="0%" stop-color="#f07800" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#f07800" stop-opacity="0"/>
+    </radialGradient>
+    <!-- 음파 클리핑 -->
+    <clipPath id="clip"><rect width="1280" height="640"/></clipPath>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="1280" height="640" fill="url(#grad)"/>
+  <rect width="1280" height="640" fill="url(#glow)"/>
+
+  <!-- 장식용 원형 링 -->
+  <circle cx="960" cy="320" r="260" fill="none" stroke="#f07800" stroke-width="1" opacity="0.12"/>
+  <circle cx="960" cy="320" r="200" fill="none" stroke="#f07800" stroke-width="1" opacity="0.10"/>
+  <circle cx="960" cy="320" r="140" fill="none" stroke="#f07800" stroke-width="1.5" opacity="0.14"/>
+
+  <!-- 음파 바 (오른쪽 장식) -->
+  <g clip-path="url(#clip)" opacity="0.22">
+    <rect x="820" y="220" width="14" height="200" rx="7" fill="#f07800"/>
+    <rect x="850" y="170" width="14" height="300" rx="7" fill="#f5a830"/>
+    <rect x="880" y="240" width="14" height="160" rx="7" fill="#f07800"/>
+    <rect x="910" y="200" width="14" height="240" rx="7" fill="#f5a830"/>
+    <rect x="940" y="255" width="14" height="130" rx="7" fill="#f07800"/>
+    <rect x="970" y="185" width="14" height="270" rx="7" fill="#f5a830"/>
+    <rect x="1000" y="235" width="14" height="170" rx="7" fill="#f07800"/>
+    <rect x="1030" y="210" width="14" height="220" rx="7" fill="#f5a830"/>
+    <rect x="1060" y="260" width="14" height="120" rx="7" fill="#f07800"/>
+    <rect x="1090" y="195" width="14" height="250" rx="7" fill="#f5a830"/>
+    <rect x="1120" y="240" width="14" height="160" rx="7" fill="#f07800"/>
+    <rect x="1150" y="215" width="14" height="210" rx="7" fill="#f5a830"/>
+    <rect x="1180" y="270" width="14" height="100" rx="7" fill="#f07800"/>
+    <rect x="1210" y="200" width="14" height="240" rx="7" fill="#f5a830"/>
+    <rect x="1240" y="250" width="14" height="140" rx="7" fill="#f07800"/>
+  </g>
+
+  <!-- 로고 원 -->
+  <circle cx="148" cy="290" r="72" fill="#f07800" opacity="0.95"/>
+  <g fill="white" opacity="0.95">
+    <ellipse cx="133" cy="310" rx="16" ry="11" transform="rotate(-15,133,310)"/>
+    <rect x="147" y="268" width="6" height="44" rx="3"/>
+    <ellipse cx="163" cy="302" rx="16" ry="11" transform="rotate(-15,163,302)"/>
+    <rect x="177" y="260" width="6" height="44" rx="3"/>
+    <rect x="147" y="268" width="36" height="7" rx="3.5"/>
+  </g>
+
+  <!-- 타이틀 텍스트 -->
+  <text x="248" y="278" font-family="'Segoe UI', 'Malgun Gothic', sans-serif"
+        font-size="62" font-weight="800" fill="white" opacity="0.97"
+        letter-spacing="-1">니나마무's 플레이어</text>
+
+  <!-- 서브타이틀 -->
+  <text x="250" y="330" font-family="'Segoe UI', 'Malgun Gothic', sans-serif"
+        font-size="26" fill="#f5a830" opacity="0.9" letter-spacing="1">
+    치지직 스트리머를 위한 유튜브 뮤직 플레이어
+  </text>
+
+  <!-- 태그 뱃지들 -->
+  <g font-family="'Segoe UI', monospace" font-size="18" fill="white">
+    <!-- yt-dlp -->
+    <rect x="250" y="368" width="110" height="34" rx="6" fill="#f07800" opacity="0.9"/>
+    <text x="305" y="390" text-anchor="middle" fill="white" font-weight="600">yt-dlp</text>
+    <!-- PyQt6 -->
+    <rect x="372" y="368" width="110" height="34" rx="6" fill="#2a2a3a" stroke="#f07800" stroke-width="1.2" opacity="0.9"/>
+    <text x="427" y="390" text-anchor="middle">PyQt6</text>
+    <!-- OBS -->
+    <rect x="494" y="368" width="130" height="34" rx="6" fill="#2a2a3a" stroke="#f07800" stroke-width="1.2" opacity="0.9"/>
+    <text x="559" y="390" text-anchor="middle">OBS 지원</text>
+    <!-- ffmpeg -->
+    <rect x="636" y="368" width="120" height="34" rx="6" fill="#2a2a3a" stroke="#f07800" stroke-width="1.2" opacity="0.9"/>
+    <text x="696" y="390" text-anchor="middle">ffmpeg</text>
+  </g>
+
+  <!-- 하단 URL -->
+  <text x="250" y="450" font-family="'Segoe UI', monospace" font-size="20"
+        fill="#f07800" opacity="0.55" letter-spacing="1">
+    github.com/YOUR_ID/YOUR_REPO
+  </text>
+</svg>
