@@ -7,9 +7,9 @@
 **치지직 스트리머를 위한 유튜브 뮤직 플레이어**
 
 [![Release](https://img.shields.io/github/v/release/LEESIHEON1213/CHZZK_MUSIC_PLAYER?style=flat-square&color=f07800&labelColor=1a1a1a&label=최신+버전)](https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER/releases/latest)
-[![Python](https://img.shields.io/badge/Python-3.11+-flat-square?style=flat-square&color=3b7dd8&labelColor=1a1a1a)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-flat-square?style=flat-square&color=4ade80&labelColor=1a1a1a)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows-flat-square?style=flat-square&color=888&labelColor=1a1a1a)](https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER/releases)
+[![Python](https://img.shields.io/badge/Python-3.11+-3b7dd8?style=flat-square&labelColor=1a1a1a)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-4ade80?style=flat-square&labelColor=1a1a1a)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows-888?style=flat-square&labelColor=1a1a1a)](https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER/releases)
 
 <br/>
 
