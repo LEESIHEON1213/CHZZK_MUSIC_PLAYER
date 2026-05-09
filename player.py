@@ -321,7 +321,7 @@ class FFmpegPlayer:
                 ffplay_cmd = [
                     _ffplay(), "-nodisp", "-autoexit",
                     "-hide_banner", "-loglevel", "quiet",
-                    "-af", f"volume={ffplay_vol:.4f}",
+                    "-af", f"volume={ffplay_vol:.4f},loudnorm=I=-16:LRA=11:TP=-1.5",
                 ]
                 if seek_to > 1.0:
                     ffplay_cmd += ["-ss", f"{seek_to:.1f}"]
@@ -343,7 +343,7 @@ class FFmpegPlayer:
                 cmd = [
                     _ffplay(), "-nodisp", "-autoexit",
                     "-hide_banner", "-loglevel", "quiet",
-                    "-af", f"volume={ffplay_vol:.4f}",
+                    "-af", f"volume={ffplay_vol:.4f},loudnorm=I=-16:LRA=11:TP=-1.5",
                 ]
                 if seek_to > 1.0:
                     cmd += ["-ss", f"{seek_to:.1f}"]

@@ -339,6 +339,52 @@ class MiniProgressBar(QWidget):
 # 위젯 창
 # ─────────────────────────────────────────────
 
+class _ResizeHandle(QWidget):
+    """우하단 리사이즈 핸들 — 부모(StreamWidget) 크기를 직접 조절"""
+
+    def __init__(self, parent: "StreamWidget"):
+        super().__init__(parent)
+        self.setFixedSize(18, 18)
+        self.setCursor(Qt.CursorShape.SizeFDiagCursor)
+        self._dragging = False
+        self._start_global = QPoint()
+        self._start_size   = QSize()
+
+    def paintEvent(self, _):
+        p = QPainter(self)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        w, h = self.width(), self.height()
+        color = QColor(self.parent().theme.accent)
+        color.setAlpha(160)
+        p.setPen(QPen(color, 1.5))
+        for i in range(1, 4):          # 점선 3줄
+            o = i * 5
+            p.drawLine(w - 2, o, o, h - 2)
+        p.end()
+
+    def mousePressEvent(self, e):
+        if e.button() == Qt.MouseButton.LeftButton:
+            self._dragging     = True
+            self._start_global = e.globalPosition().toPoint()
+            pw = self.parent()
+            self._start_size   = QSize(pw.width(), pw.height())
+            e.accept()
+
+    def mouseMoveEvent(self, e):
+        if self._dragging:
+            pw   = self.parent()
+            delta = e.globalPosition().toPoint() - self._start_global
+            nw = max(pw.minimumWidth(),  self._start_size.width()  + delta.x())
+            nh = max(pw.minimumHeight(), self._start_size.height() + delta.y())
+            pw.resize(nw, nh)
+            e.accept()
+
+    def mouseReleaseEvent(self, e):
+        self._dragging = False
+        self.parent()._save_geometry()
+        e.accept()
+
+
 class StreamWidget(QWidget):
     closed = pyqtSignal()
 
@@ -348,12 +394,18 @@ class StreamWidget(QWidget):
         self.player = player
         self._pinned = True
         self._drag_pos: Optional[QPoint] = None
+        self._resizing = False
+        self._resize_start = QPoint()
+        self._resize_orig  = QSize()
         self._thumb_url = ""
         self._cur_duration = 0
 
         self._setup_window()
         self._build_ui()
         self._start_timer()
+        self.setMouseTracking(True)
+
+    _GEO_PATH = None  # ui.py에서 주입: widget._GEO_PATH = paths.BASE_DIR / "widget_geometry.json"
 
     def _setup_window(self):
         self.setWindowFlags(
@@ -361,14 +413,51 @@ class StreamWidget(QWidget):
             Qt.WindowType.WindowStaysOnTopHint,
         )
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-        self.setMinimumWidth(340)
-        self.setFixedHeight(114)
-        self.resize(410, 114)
+        self.setMinimumWidth(300)
+        self.setMinimumHeight(80)
+        self._restore_geometry()
+
+    # ── geometry 저장/복원 ──
+
+    def _restore_geometry(self):
+        if self._GEO_PATH is None:
+            self.resize(410, 114)
+            return
+        try:
+            import json as _json
+            from PyQt6.QtWidgets import QApplication
+            data = _json.loads(self._GEO_PATH.read_text(encoding="utf-8"))
+            screen = QApplication.primaryScreen().availableGeometry()
+            x = max(0, min(data["x"], screen.width()  - 100))
+            y = max(0, min(data["y"], screen.height() - 100))
+            w = max(300, min(data["w"], screen.width()))
+            h = max(80,  min(data["h"], screen.height()))
+            self.setGeometry(x, y, w, h)
+        except Exception:
+            self.resize(410, 114)
+
+    def _save_geometry(self):
+        if self._GEO_PATH is None:
+            return
+        try:
+            import json as _json
+            g = self.geometry()
+            self._GEO_PATH.write_text(
+                _json.dumps({"x": g.x(), "y": g.y(), "w": g.width(), "h": g.height()}),
+                encoding="utf-8",
+            )
+        except Exception:
+            pass
 
     def _build_ui(self):
         t = self.theme
         self._inner = QWidget(self)
         self._inner.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self._inner.setMouseTracking(True)
+
+        # 리사이즈 핸들 오버레이 (우하단)
+        self._resize_handle = _ResizeHandle(self)
+        self._resize_handle.raise_()
 
         row = QHBoxLayout(self._inner)
         row.setContentsMargins(12, 10, 12, 10)
@@ -472,20 +561,52 @@ class StreamWidget(QWidget):
 
     def resizeEvent(self, e):
         self._inner.setGeometry(self.rect())
+        if hasattr(self, "_resize_handle"):
+            sz = 18
+            self._resize_handle.setGeometry(self.width() - sz, self.height() - sz, sz, sz)
         super().resizeEvent(e)
 
-    # ── 드래그 ──
+    # ── 드래그 / 리사이즈 ──
+
+    _RESIZE_MARGIN = 12
+
+    def _in_resize_zone(self, pos: QPoint) -> bool:
+        return (pos.x() >= self.width()  - self._RESIZE_MARGIN and
+                pos.y() >= self.height() - self._RESIZE_MARGIN)
 
     def mousePressEvent(self, e):
         if e.button() == Qt.MouseButton.LeftButton:
-            self._drag_pos = e.globalPosition().toPoint() - self.frameGeometry().topLeft()
+            lpos = e.position().toPoint()
+            if self._in_resize_zone(lpos):
+                self._resizing     = True
+                self._drag_pos     = None
+                self._resize_start = e.globalPosition().toPoint()
+                self._resize_orig  = QSize(self.width(), self.height())
+            else:
+                self._resizing = False
+                self._drag_pos = e.globalPosition().toPoint() - self.frameGeometry().topLeft()
 
     def mouseMoveEvent(self, e):
-        if self._drag_pos and e.buttons() == Qt.MouseButton.LeftButton:
+        if not (e.buttons() & Qt.MouseButton.LeftButton):
+            # 버튼 안 눌렸을 때 커서만 변경
+            if self._in_resize_zone(e.position().toPoint()):
+                self.setCursor(Qt.CursorShape.SizeFDiagCursor)
+            else:
+                self.setCursor(Qt.CursorShape.ArrowCursor)
+            return
+        if getattr(self, "_resizing", False):
+            delta = e.globalPosition().toPoint() - self._resize_start
+            nw = max(self.minimumWidth(),  self._resize_orig.width()  + delta.x())
+            nh = max(self.minimumHeight(), self._resize_orig.height() + delta.y())
+            self.resize(nw, nh)
+        elif self._drag_pos:
             self.move(e.globalPosition().toPoint() - self._drag_pos)
 
     def mouseReleaseEvent(self, _):
         self._drag_pos = None
+        self._resizing = False
+        self.setCursor(Qt.CursorShape.ArrowCursor)
+        self._save_geometry()
 
     # ── 컨트롤 ──
 

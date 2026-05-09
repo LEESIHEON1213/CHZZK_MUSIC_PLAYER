@@ -628,8 +628,35 @@ class MainWindow(QMainWindow):
     def _setup_window(self):
         self.setWindowTitle(APP_NAME)
         self.setMinimumSize(440, 620)
-        self.resize(460, 720)
         self.setStyleSheet(build_stylesheet(self.theme))
+        self._restore_geometry()
+
+    # ── geometry 저장/복원 ──
+
+    _GEO_PATH = _paths.BASE_DIR / "window_geometry.json"
+
+    def _restore_geometry(self):
+        try:
+            data = json.loads(self._GEO_PATH.read_text(encoding="utf-8"))
+            from PyQt6.QtWidgets import QApplication
+            screen = QApplication.primaryScreen().availableGeometry()
+            x = max(0, min(data["x"], screen.width()  - 100))
+            y = max(0, min(data["y"], screen.height() - 100))
+            w = max(440, min(data["w"], screen.width()))
+            h = max(620, min(data["h"], screen.height()))
+            self.setGeometry(x, y, w, h)
+        except Exception:
+            self.resize(460, 720)
+
+    def _save_geometry(self):
+        try:
+            g = self.geometry()
+            self._GEO_PATH.write_text(
+                json.dumps({"x": g.x(), "y": g.y(), "w": g.width(), "h": g.height()}),
+                encoding="utf-8",
+            )
+        except Exception:
+            pass
 
     def _setup_player_callbacks(self):
         self.player.on_track_start  = lambda t: self.sig_track_start.emit(t)
@@ -642,6 +669,7 @@ class MainWindow(QMainWindow):
     # ── 창 닫기 ──
 
     def closeEvent(self, event: QCloseEvent):
+        self._save_geometry()
         self.player.stop()
         kill_all_ffmpeg()
         if self._widget:
@@ -960,6 +988,8 @@ class MainWindow(QMainWindow):
         else:
             if not self._widget:
                 self._widget = StreamWidget(self.theme, self.player)
+                self._widget._GEO_PATH = _paths.BASE_DIR / "widget_geometry.json"
+                self._widget._restore_geometry()
                 self._widget.closed.connect(lambda: None)
             if self.player.queue.current:
                 self._widget.update_track(self.player.queue.current)

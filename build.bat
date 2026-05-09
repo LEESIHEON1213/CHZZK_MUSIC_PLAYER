@@ -20,9 +20,11 @@ if errorlevel 1 (
 )
 
 set ICO_OPT=
+set ICO_EMBED=
 if exist serorong.ico (
     set ICO_OPT=--windows-icon-from-ico=serorong.ico
-    echo [INFO] serorong.ico found
+    set ICO_EMBED=--include-data-files=serorong.ico=cache/serorong.ico
+    echo [INFO] serorong.ico found - will embed into cache/
 ) else (
     echo [WARN] serorong.ico not found - using default icon
 )
@@ -36,6 +38,7 @@ python -m nuitka ^
     --include-package=pycaw ^
     --include-package=comtypes ^
     %ICO_OPT% ^
+    %ICO_EMBED% ^
     --output-dir=dist ^
     --output-filename=NinamamuPlayer ^
     --windows-product-name="NinamamuPlayer" ^
@@ -56,7 +59,7 @@ if errorlevel 1 (
 echo.
 echo [2/3] Copying external tools...
 set DIST=dist
-for %%f in (yt-dlp.exe ffmpeg.exe ffplay.exe ffprobe.exe serorong.ico) do (
+for %%f in (yt-dlp.exe ffmpeg.exe ffplay.exe ffprobe.exe) do (
     if exist %%f (
         copy /Y %%f "%DIST%\" >nul
         echo   %%f copied

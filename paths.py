@@ -29,3 +29,5 @@ def _resolve() -> Path:
 
 
 BASE_DIR: Path = _resolve()
+CACHE_DIR: Path = BASE_DIR / "cache"
+CACHE_DIR.mkdir(exist_ok=True)
