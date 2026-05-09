@@ -6,7 +6,7 @@
 
 **치지직 스트리머를 위한 유튜브 뮤직 플레이어**
 
-[![Release](https://img.shields.io/github/v/release/YOUR_ID/YOUR_REPO?style=flat-square&color=f07800&labelColor=1a1a1a&label=최신+버전)](https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER/releases/latest)
+[![Release](https://img.shields.io/github/v/release/LEESIHEON1213/CHZZK_MUSIC_PLAYER?style=flat-square&color=f07800&labelColor=1a1a1a&label=최신+버전)](https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER/releases/latest)
 [![Python](https://img.shields.io/badge/Python-3.11+-flat-square?style=flat-square&color=3b7dd8&labelColor=1a1a1a)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-flat-square?style=flat-square&color=4ade80&labelColor=1a1a1a)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows-flat-square?style=flat-square&color=888&labelColor=1a1a1a)](https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER/releases)
@@ -52,8 +52,8 @@
 ### 방법 B — 소스 실행
 
 ```bash
-git clone https://github.com/YOUR_ID/YOUR_REPO.git
-cd YOUR_REPO
+git clone https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER.git
+cd CHZZK_MUSIC_PLAYER
 pip install -r requirements.txt
 python main.py
 ```
