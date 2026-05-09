@@ -6,10 +6,10 @@
 
 **치지직 스트리머를 위한 유튜브 뮤직 플레이어**
 
-[![Release](https://img.shields.io/github/v/release/YOUR_ID/YOUR_REPO?style=flat-square&color=f07800&labelColor=1a1a1a&label=최신+버전)](https://github.com/YOUR_ID/YOUR_REPO/releases/latest)
+[![Release](https://img.shields.io/github/v/release/YOUR_ID/YOUR_REPO?style=flat-square&color=f07800&labelColor=1a1a1a&label=최신+버전)](https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER/releases/latest)
 [![Python](https://img.shields.io/badge/Python-3.11+-flat-square?style=flat-square&color=3b7dd8&labelColor=1a1a1a)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-flat-square?style=flat-square&color=4ade80&labelColor=1a1a1a)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows-flat-square?style=flat-square&color=888&labelColor=1a1a1a)](https://github.com/YOUR_ID/YOUR_REPO/releases)
+[![Platform](https://img.shields.io/badge/Platform-Windows-flat-square?style=flat-square&color=888&labelColor=1a1a1a)](https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER/releases)
 
 <br/>
 
@@ -18,9 +18,9 @@
 
 <br/><br/>
 
-**[⬇ exe 다운로드](https://github.com/YOUR_ID/YOUR_REPO/releases/latest)** &nbsp;·&nbsp;
+**[⬇ exe 다운로드](https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER/releases/latest)** &nbsp;·&nbsp;
 **[사용법 보기](#-사용법)** &nbsp;·&nbsp;
-**[문제 신고](https://github.com/YOUR_ID/YOUR_REPO/issues)**
+**[문제 신고](https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER/issues)**
 
 </div>
 
@@ -45,7 +45,7 @@
 
 ### 방법 A — exe 바로 실행 (권장)
 
-1. [Releases](https://github.com/YOUR_ID/YOUR_REPO/releases/latest) 에서 `NinamamuPlayer.exe` 다운로드
+1. [Releases](https://github.com/LEESIHEON1213/CHZZK_MUSIC_PLAYER/releases/latest) 에서 `NinamamuPlayer.exe` 다운로드
 2. 원하는 폴더에 놓고 실행
 3. 최초 실행 시 yt-dlp · ffmpeg 자동 다운로드
 
