@@ -14,10 +14,10 @@ from PyQt6.QtCore import QByteArray
 import paths  # noqa: F401  (다른 모듈들이 paths.BASE_DIR 을 참조)
 
 from updater import check_tools_exist
-from player import kill_all_ffmpeg
+from player import kill_all_ffmpeg  # v3: no-op, mpv는 EMAGPlayer.terminate()로 정리
 from ui import MainWindow
 
-APP_NAME = "니나마무's 플레이어"
+APP_NAME = "니나마무's 플레이어 v3"
 
 _DEFAULT_FILES: dict[str, str] = {
     "favorites.json": json.dumps([], ensure_ascii=False, indent=2),

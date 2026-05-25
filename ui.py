@@ -671,6 +671,7 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event: QCloseEvent):
         self._save_geometry()
         self.player.stop()
+        self.player.terminate()  # v3: mpv 종료
         kill_all_ffmpeg()
         if self._widget:
             self._widget.close()
